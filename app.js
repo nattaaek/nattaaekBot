@@ -36,7 +36,8 @@ var tableStorage = new botbuilder_azure.AzureBotStorage({ gzipData: false }, azu
 var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
-bot.dialog('/', function (session) {
+var bot = new builder.UniversalBot(connector, function (session) {
+
     var str = [...session.message.text];
     var stack = [];
     var first = 9999999, last = 0;
@@ -77,9 +78,10 @@ bot.dialog('/', function (session) {
         session.send("You said: %s it's balance bracket Nice Guy", session.message.text);
     }
     else{
-        session.send("error: %s syntax is error please fix it");
+        session.send("error: %s syntax is error please fix it", session.message.text);
     }
 
+});
 
 function EmptyStack(last) {
     
@@ -108,7 +110,3 @@ function isCloseBracket(inputChar) {
         return false;
     }
 }
-});
-
-
-///////////////////////////////
